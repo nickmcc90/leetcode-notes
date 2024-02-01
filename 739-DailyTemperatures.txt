@@ -14,3 +14,24 @@ Attack the array from the back. Have an empty stack initialized. If the stack is
 for that number. The stack is a dictionary of (key,value) (temperature, index). If a temp
 is higher than the previous, then we pop the temp in the stack and push in the new temp. If 
 a temp is lower than previous, we return the subtraction of both indexes and push in the new temp.
+
+class Solution {
+public:
+    vector<int> dailyTemperatures(vector<int>& temperatures) {
+        int n = temperatures.size();
+        vector<int> ans(n,0);
+        stack<pair<int,int>> s;
+
+        for(int i=n-1; i>=0; i--){
+            while(!s.empty() && s.top().first <= temperatures[i]){
+                s.pop();
+            }
+            if(!s.empty()){
+                ans[i] = s.top().second - i;
+            }
+
+            s.push({temperatures[i], i});
+        }
+        return ans;
+    }
+};
